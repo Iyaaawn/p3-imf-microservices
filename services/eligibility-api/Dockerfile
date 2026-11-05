@@ -8,6 +8,7 @@ RUN dotnet publish -c Release -o /app
 
 # Run stage: smaller runtime-only image
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY --from=build /app .
 EXPOSE 8080
