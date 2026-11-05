@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using RequestsApi.Data;
+using RequestsApi.Clients;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,9 @@ builder.Services.AddSwaggerGen();
 
 // Adds a health check that also confirms the database is reachable
 builder.Services.AddHealthChecks().AddDbContextCheck<RequestsDbContext>();
+
+builder.Services.AddHttpClient<EligibilityClient>(client =>
+    client.BaseAddress = new Uri(builder.Configuration["Services:EligibilityApi"]!));
 
 #endregion
 
