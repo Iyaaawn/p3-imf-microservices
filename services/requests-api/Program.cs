@@ -27,6 +27,14 @@ builder.Services.AddHealthChecks().AddDbContextCheck<RequestsDbContext>();
 builder.Services.AddHttpClient<EligibilityClient>(client =>
     client.BaseAddress = new Uri(builder.Configuration["Services:EligibilityApi"]!));
 
+// Which websites may call this API from a browser (React locally, and later Static Web Apps)
+var allowedOrigins = builder.Configuration["AllowedOrigins"]?
+    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+    ?? new[] { "http://localhost:5173" };
+
+builder.Services.AddCors(o => o.AddPolicy("Frontend", p =>
+    p.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod()));
+
 #endregion
 
 var app = builder.Build();
@@ -38,6 +46,9 @@ using (var scope = app.Services.CreateScope())
 // Serves the Swagger JSON and the Swagger UI page (on in every environment, so it works in Docker and Azure)
 app.UseSwagger();
 app.UseSwaggerUI();
+
+// Adds the CORS headers so the browser lets React read the responses
+app.UseCors("Frontend");
 
 // Connects the controller routes, like /api/requests
 app.MapControllers();
