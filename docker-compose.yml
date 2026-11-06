@@ -41,7 +41,6 @@ services:
       ConnectionStrings__RequestsDb: "Server=sql;Database=RequestsDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True"
       Services__CountriesApi: "http://countries-api:8080/"
       Services__EligibilityApi: "http://eligibility-api:8080/"
-      Cors__AllowedOrigins__0: "http://localhost:5173"
     depends_on:
       countries-api: { condition: service_healthy }
       eligibility-api: { condition: service_healthy }

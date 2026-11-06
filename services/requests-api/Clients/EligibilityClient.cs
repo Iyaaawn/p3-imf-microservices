@@ -14,6 +14,7 @@ public class EligibilityClient(HttpClient http)
 
         var response = await http.PostAsJsonAsync("api/eligibility/check", body);
         response.EnsureSuccessStatusCode();   // throws if Eligibility returned an error
-        return await response.Content.ReadFromJsonAsync<EligibilityResult>();
+        return await response.Content.ReadFromJsonAsync<EligibilityResult>()
+            ?? throw new HttpRequestException("Empty response from Eligibility");
     }
 }
