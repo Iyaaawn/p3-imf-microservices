@@ -19,12 +19,12 @@ public class CountriesDbContext(DbContextOptions<CountriesDbContext> options) : 
             
             //Seeded data (here temporarily for when you're testing the approve/reject status changes)
             e.HasData(
-                new Country{IsoCode = "GHA", Name = "Ghana", IsActive = false},
-                new Country{IsoCode = "KEN", Name = "Kenya", IsActive = false},
-                new Country{IsoCode = "ARG", Name = "Argentina", IsActive = false},
-                new Country{IsoCode = "EGY", Name = "Egypt", IsActive = false},
+                new Country{IsoCode = "GHA", Name = "Ghana", IsActive = true},
+                new Country{IsoCode = "KEN", Name = "Kenya", IsActive = true},
+                new Country{IsoCode = "ARG", Name = "Argentina", IsActive = true},
+                new Country{IsoCode = "EGY", Name = "Egypt", IsActive = true},
                 new Country{IsoCode = "PAK", Name = "Pakistan", IsActive = false},
-                new Country{IsoCode = "LKA", Name = "Sri Lanka", IsActive = false}                
+                new Country{IsoCode = "LKA", Name = "Sri Lanka", IsActive = true}                
                 );
         });
     }

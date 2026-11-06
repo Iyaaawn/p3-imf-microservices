@@ -42,25 +42,25 @@ namespace countries_api.Migrations
                         new
                         {
                             IsoCode = "GHA",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Ghana"
                         },
                         new
                         {
                             IsoCode = "KEN",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Kenya"
                         },
                         new
                         {
                             IsoCode = "ARG",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Argentina"
                         },
                         new
                         {
                             IsoCode = "EGY",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Egypt"
                         },
                         new
@@ -72,7 +72,7 @@ namespace countries_api.Migrations
                         new
                         {
                             IsoCode = "LKA",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Sri Lanka"
                         });
                 });
