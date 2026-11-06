@@ -1,8 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import ProtectedRoute from "./components/ProtectedRoute";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+
 import RequestsPage from "./pages/RequestsPage";
 import NewRequestPage from "./pages/NewRequestPage";
 
