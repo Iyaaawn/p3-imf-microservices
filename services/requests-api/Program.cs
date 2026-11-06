@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using RequestsApi.Data;
 using RequestsApi.Clients;
+using Microsoft.Extensions.Http.Resilience;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +25,21 @@ builder.Services.AddSwaggerGen();
 // Adds a health check that also confirms the database is reachable
 builder.Services.AddHealthChecks().AddDbContextCheck<RequestsDbContext>();
 
-builder.Services.AddHttpClient<EligibilityClient>(client =>
-    client.BaseAddress = new Uri(builder.Configuration["Services:EligibilityApi"]!));
+// 3 s per attempt, up to 2 retries, 10 s total
+Action<HttpStandardResilienceOptions> resilience = o =>
+{
+    o.AttemptTimeout.Timeout = TimeSpan.FromSeconds(3);
+    o.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(10);
+    o.Retry.MaxRetryAttempts = 2;
+};
 
+builder.Services.AddHttpClient<CountriesClient>(c =>
+    c.BaseAddress = new Uri(builder.Configuration["Services:CountriesApi"]!))
+    .AddStandardResilienceHandler(resilience);
+
+builder.Services.AddHttpClient<EligibilityClient>(c =>
+    c.BaseAddress = new Uri(builder.Configuration["Services:EligibilityApi"]!))
+    .AddStandardResilienceHandler(resilience);
 #endregion
 
 var app = builder.Build();
